@@ -14,5 +14,12 @@ class Continent(models.Model):
     planet = models.ForeignKey(Planet, to_field='ek')
 
 
+class TestBase64Field(TestCase):
+
+    def test_field_is_none_after_creation(self):
+        planet = Planet.objects.create(name='Fucking Earth')
+
+        self.assertIn(planet.ek, ['', None])
+        self.assertIsNotNone(planet.pk)
 
 
