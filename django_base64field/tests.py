@@ -22,4 +22,14 @@ class TestBase64Field(TestCase):
         self.assertIn(planet.ek, ['', None])
         self.assertIsNotNone(planet.pk)
 
+    def test_field_not_none_after_saved(self):
+        planet = Planet.objects.create(name='Little Planet')
+        base64_key = base64.encode(planet.pk)
+        saved_planet = Planet.objects.get(pk=planet.pk)
+
+        self.assertEqual(saved_planet.ek, base64_key)
+
+
+
+
 
