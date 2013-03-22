@@ -4,7 +4,7 @@ from django.db.models.fields import CharField
 class Base64Field(CharField):
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = kwargs.get('max, length', 255)
+        kwargs['max_length'] = kwargs.get('max_length', 255)
         kwargs['blank'] = kwargs.get('blank', True)
         kwargs['editable'] = kwargs.get('editable', False)
         kwargs['default']  = kwargs.get('default', '')
