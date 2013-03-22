@@ -1,11 +1,19 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
+from django.db import models
 from django.test import TestCase
+from django.utils.baseconv import base64
+from django_base64field.fields import Base64Field
+
+class Planet(models.Model):
+    ek = Base64Field()
+    name = models.CharField(max_length=13)
+
+
+class Continent(models.Model):
+    ek = Base64Field()
+    name = models.CharField(max_length=13)
+    planet = models.ForeignKey(Planet, to_field='ek')
+
+
 
 
 class SimpleTest(TestCase):
