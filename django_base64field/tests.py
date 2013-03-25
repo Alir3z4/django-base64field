@@ -68,6 +68,32 @@ class TestBase64Field(TestCase):
 
         self.assertIsNone(continent)
 
+    def test_field_for_fk_not_none_after_creation(self):
+        """
+         So I want to create new `Continent` for my new shiny funky punky ass
+        `Planet` that I've just created, It's easy, just retrieving new
+        planet from database to make `ek` available for it, Then it will be
+        fucking freaking ok to assign the fresh `Planet` to
+        our sucker `Continent`.
+        """
+        planet = Planet.objects.create()
+        same_planet_but_fresh = Planet.objects.get(pk=planet.pk)
+        continent = Continent.objects.create(planet=same_planet_but_fresh)
+
+        self.assertIsNotNone(continent)
+        self.assertIsInstance(continent, Continent)
+        self.assertIn(continent.ek, ['', None])
+
+        continent_pk = continent.pk
+        same_continent_but_fresh = Continent.objects.get(pk=continent_pk)
+
+
+        self.assertNotEqual(same_continent_but_fresh.ek, continent.ek)
+        self.assertEqual(same_continent_but_fresh.ek, base64.encode(continent_pk))
+
+
+
+
 
 
 
