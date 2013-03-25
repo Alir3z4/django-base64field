@@ -50,8 +50,23 @@ class TestBase64Field(TestCase):
         self.assertEqual(same_planet_but_fresh.ek, base64_key)
         self.assertNotEquals(planet.ek, same_planet_but_fresh.ek)
 
-        self.assertEqual(saved_planet.ek, base64_key)
+    def test_field_for_fk_none_on_creation(self):
+        """
+         I just created a `Planet`, As you already know, `planet.ek` is not
+        available on `planet` at the moment. It will be available on next
+        retrieving from database. So `planet` can't be assigned for creating
+        new `Continent` as FK on `Continent.planet`.
+        """
+        planet = Planet.objects.create()
 
+        continent = None
+
+        try:
+            continent = Continent.objects.create(planet=planet)
+        except:
+            pass
+
+        self.assertIsNone(continent)
 
 
 
