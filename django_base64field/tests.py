@@ -20,6 +20,27 @@ class Continent(models.Model):
     planet = models.ForeignKey(Planet, to_field='ek')
 
 
+class Helper(models.Model):
+    """
+    base64 encoded value won't be available at first time creation.
+    It can ve accessible by getting the object from database after creation
+    mean when it get saved completely, But what if we don't want to get our base64
+    encoded key from our sweet model by retrieving it again from database?
+
+    It's easy, efficient, holly and molly!
+    """
+    ek = Base64Field()
+
+
+    def _ek(self):
+        if self.ek: return self.ek
+
+        if (not self.ek) and (self.pk):
+            return base64.encode(self.pk)
+
+        return self.ek
+
+
 class TestBase64Field(TestCase):
 
     def test_field_is_none_on_creation(self):
