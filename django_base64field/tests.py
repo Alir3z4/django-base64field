@@ -5,12 +5,18 @@ from django_base64field.fields import Base64Field
 
 class Planet(models.Model):
     ek = Base64Field()
-    name = models.CharField(max_length=13)
+    name = models.CharField(
+        default='Fucker',
+        max_length=103
+    )
 
 
 class Continent(models.Model):
     ek = Base64Field()
-    name = models.CharField(max_length=13)
+    name = models.CharField(
+        default='Suckers!',
+        max_length=13
+    )
     planet = models.ForeignKey(Planet, to_field='ek')
 
 
