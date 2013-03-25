@@ -2,6 +2,10 @@
 Django Base64Field
 ==================
 
+.. image:: https://travis-ci.org/Alir3z4/django-base64field.png
+   :alt: travis-cli tests status for django-base64field
+   :target: https://travis-ci.org/Alir3z4/django-base64field
+
 .. contents:: Table of contents
 
 Overview
