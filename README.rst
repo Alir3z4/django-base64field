@@ -33,26 +33,26 @@ out of ``README.rst`` and go look inside ``django_base64field.tests.py``.
 
 Installation
 ------------
-``django-base64field`` is available on pypi:
+``django-base64field`` is available on pypi
 
 http://pypi.python.org/pypi/django-base64field
 
-So easily install it by ``pip``:
+So easily install it by ``pip``
 ::
-    
+
     $ pip install django-base64field
 
 Or by ``easy_install``
 ::
-    
+
     $ easy_install django-base64field
 
 Another way is by cloning ``django-base64field``'s
-`git repo <https://github.com/Alir3z4/django-base64field>`_ :::
-    
+`git repo <https://github.com/Alir3z4/django-base64field>`_ ::
+
     $ git clone git://github.com/Alir3z4/django-base64field.git
 
 Then install it by running:
 ::
-    
+
     $ python setup.py install
