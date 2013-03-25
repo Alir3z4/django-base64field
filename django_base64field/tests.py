@@ -22,16 +22,33 @@ class Continent(models.Model):
 
 class TestBase64Field(TestCase):
 
-    def test_field_is_none_after_creation(self):
-        planet = Planet.objects.create(name='Fucking Earth')
+    def test_field_is_none_on_creation(self):
+        """
+         After Planet has created, `planet.ek` won't be available.
+        because `planet.ek` will be generated after `planet` has been saved.
+        """
+        planet = Planet.objects.create()
 
         self.assertIn(planet.ek, ['', None])
         self.assertIsNotNone(planet.pk)
 
     def test_field_not_none_after_saved(self):
-        planet = Planet.objects.create(name='Little Planet')
+        """
+         After `Planet` has been created, `Planet.ek` will be available
+        on next time of getting `planet` from database.
+
+        Why?
+        ----
+             Because after `planet` get created, `post_save` signal of `Planet` will
+            emitted, This is where `ek` field will be set from ``base64``
+            encoded value based on `pk`.
+        """
+        planet = Planet.objects.create()
         base64_key = base64.encode(planet.pk)
-        saved_planet = Planet.objects.get(pk=planet.pk)
+        same_planet_but_fresh = Planet.objects.get(pk=planet.pk)
+
+        self.assertEqual(same_planet_but_fresh.ek, base64_key)
+        self.assertNotEquals(planet.ek, same_planet_but_fresh.ek)
 
         self.assertEqual(saved_planet.ek, base64_key)
 
