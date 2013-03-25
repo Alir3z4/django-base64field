@@ -86,8 +86,8 @@ class TestBase64Field(TestCase):
             continent = Continent.objects.create(planet=planet)
         except:
             pass
-
-        self.assertIsNone(continent)
+        finally:
+            self.assertIsNone(continent)
 
     def test_field_for_fk_not_none_after_creation(self):
         """
