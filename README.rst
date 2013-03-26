@@ -48,7 +48,7 @@ Here is simple usage of ``Base64Field``
     >>> modelia.ek
     >>> u''
     >>> refreshed_modelia = MyModelianto.objects.get(pk=modelia.pk)
-    >>> modelia.ek
+    >>> refreshed_modelia.ek
     >>> u'HS7Y_sdg3x'
 
 As You can see ``ek`` in not available on returned instance
