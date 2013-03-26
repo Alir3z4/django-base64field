@@ -69,7 +69,7 @@ class TestBase64Field(TestCase):
         same_planet_but_fresh = Planet.objects.get(pk=planet.pk)
 
         self.assertEqual(same_planet_but_fresh.ek, base64_key)
-        self.assertNotEquals(planet.ek, same_planet_but_fresh.ek)
+        self.assertNotEqual(planet.ek, same_planet_but_fresh.ek)
 
     def test_field_for_fk_none_on_creation(self):
         """
