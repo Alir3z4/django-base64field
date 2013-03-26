@@ -52,7 +52,7 @@ Here is simple usage of ``Base64Field``
     >>> u'HS7Y_sdg3x'
 
 As You can see ``ek`` in not available on returned instance
-from ``MyModelianto.objects.create()``, It will be available after retrieveing
+from ``MyModelianto.objects.create()``, It will be available after retrieving
 ``refreshed_modelia`` from database which is same record as ``modelia`` here.
 
 This behavior can be easily controlled with implementing a simple helper
@@ -81,7 +81,16 @@ Another way is by cloning ``django-base64field``'s
 
     $ git clone git://github.com/Alir3z4/django-base64field.git
 
-Then install it by running:
+Then install it by running
 ::
 
     $ python setup.py install
+
+Or I don't know, Install it directly from git.
+::
+
+    pip install git+https://github.com/Alir3z4/django-base64field.git#egg=django-base64field
+
+
+Some pkg have no installation method, This is awefuckingsome that
+``django-base64field`` gives you many ways for installation.
