@@ -15,6 +15,22 @@ class Base64Field(CharField):
     this operation happens just one the first time model get saved.
     In next time model get saved or updated `base64` won't get generated.
 
+    Usage
+    -----
+    >>> from django.db import models
+    >>> from django_base64field.fields import Base64Field
+    >>>
+    >>> class MyModelianto(models.Model):
+    >>>     ek = Base64Field()
+    >>>
+    >>> modelia = MyModelianto.objects.create(pk=314159265358979323)
+    >>> modelia.ek
+    >>> u''
+    >>> refreshed_modelia = MyModelianto.objects.get(pk=modelia.pk)
+    >>> modelia.ek
+    >>> u'HS7Y_sdg3x'
+    """
+
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = kwargs.get('max_length', 255)
         kwargs['blank'] = kwargs.get('blank', True)
