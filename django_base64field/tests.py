@@ -119,6 +119,15 @@ class TestBase64Field(TestCase):
         """
         hell = Helper.objects.create()
 
+        #  On `hell` instance there is no `ek` available
+        # because It will be available on the next retrieving of `Helper`
+        self.assertIn(hell.ek, ['', None])
+        self.assertNotEqual(hell.ek, hell._ek())
+
+        #  But if `ek` is need it immediately for any reason
+        # `ek` will be available on `_ek()` method.
+        # Without any refreshing/retrieving `hell` instance again
+        # from database
         self.assertIsNotNone(hell._ek())
         self.assertNotIn(hell._ek(), ['', None])
 
