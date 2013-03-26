@@ -27,7 +27,7 @@ class Base64Field(CharField):
     >>> modelia.ek
     >>> u''
     >>> refreshed_modelia = MyModelianto.objects.get(pk=modelia.pk)
-    >>> modelia.ek
+    >>> refreshed_modelia.ek
     >>> u'HS7Y_sdg3x'
     """
 
