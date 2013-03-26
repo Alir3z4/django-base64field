@@ -2,6 +2,34 @@ from django.db.models import signals
 from django.db.models.fields import CharField
 
 class Base64Field(CharField):
+    """
+     Base64Field is useful where you need a base64 encoded value from
+    model's Primary Key a.k.a PK which is available on every django
+    application model by default. Sine `base64` encoder works with
+    `integer` value then PK should be also `integer`, Fortunately
+    again `PK` field is `integer` by nature.
+
+     When a model get saved, `post_save` signal will be emitted,
+    This is where a base64 encoded key will be generated/encoded
+    from model's `PK`, Then model will get **updated** not saved again.
+    this operation happens just one the first time model get saved.
+    In next time model get saved or updated `base64` won't get generated.
+
+    Usage
+    -----
+    >>> from django.db import models
+    >>> from django_base64field.fields import Base64Field
+    >>>
+    >>> class MyModelianto(models.Model):
+    >>>     ek = Base64Field()
+    >>>
+    >>> modelia = MyModelianto.objects.create(pk=314159265358979323)
+    >>> modelia.ek
+    >>> u''
+    >>> refreshed_modelia = MyModelianto.objects.get(pk=modelia.pk)
+    >>> modelia.ek
+    >>> u'HS7Y_sdg3x'
+    """
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = kwargs.get('max_length', 255)

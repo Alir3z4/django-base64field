@@ -13,27 +13,52 @@ Overview
 
 - A motherfucking django model field to bring ``base64`` encoded key to models.
 - It uses ``base64`` from ``django.utils.baseconv`` for encoding.
+- Tested on Python2.7, Python3.3 .
 
 How it works?
 --------------
 
-You just define a field on your model as ``Base64Field()``
-::
+``Base64Field`` is useful where you need a base64 encoded value from
+model's Primary Key a.k.a PK which is available on every django
+application model by default. Sine `base64` encoder works with
+`integer` value then PK should be also `integer`, Fortunately
+again `PK` field is `integer` by nature.
 
-    from django_base64field.fields import Base64Field
-    
-    class Planet(models.Model):
-        ek = Base64Field()
-
-
-Each time new ``Planet`` saved, A *base64* encoded key based on ``Planet`` 
-Primary Key will generated and set to ``ek``. This is happens just one 
-fucking time, Exactly after new ``Planet`` created and successfully inserted
-into Database, But the next billions times when ``Planet``  updated or saved
-``ek`` won't get touched.
+When a model get saved, `post_save` signal will be emitted,
+This is where a base64 encoded key will be generated/encoded
+from model's `PK`, Then model will get **updated** not saved again.
+this operation happens just one the first time model get saved.
+In next time model get saved or updated `base64` won't get generated.
 
 You wanna know more about how ``django-base64field`` works? Then get da fuck
 out of ``README.rst`` and go look inside ``django_base64field.tests.py``.
+
+Usage
+-----
+
+Here is simple usage of ``Base64Field``
+::
+    >>> from django.db import models
+    >>> from django_base64field.fields import Base64Field
+    >>>
+    >>> class MyModelianto(models.Model):
+    >>>     ek = Base64Field()
+    >>>
+    >>> modelia = MyModelianto.objects.create(pk=314159265358979323)
+    >>> modelia.ek
+    >>> u''
+    >>> refreshed_modelia = MyModelianto.objects.get(pk=modelia.pk)
+    >>> modelia.ek
+    >>> u'HS7Y_sdg3x'
+
+As You can see ``ek`` in not available on returned instance
+from ``MyModelianto.objects.create()``, It will be available after retrieveing
+``refreshed_modelia`` from database which is same record as ``modelia`` here.
+
+This behavior can be easily controlled with implementing a simple helper
+method on ``MyModelianto``. You can find out more about this solution on
+``django_base64field.tests.py``, Which it doesn't require to retrieving 
+the instance from database after first creation just for getting ``ek` field.
 
 Installation
 ------------
