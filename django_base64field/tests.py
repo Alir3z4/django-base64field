@@ -112,7 +112,7 @@ class TestBase64Field(TestCase):
         self.assertNotEqual(same_continent_but_fresh.ek, continent.ek)
         self.assertEqual(same_continent_but_fresh.ek, base64.encode(continent_pk))
 
-    def test_field_with_property_defined(self):
+    def test_field_with_helper_defined(self):
         """
          Look at `Helper` Model. Won't be any headache for retrieving the
         object after creation from database anymore.
