@@ -24,14 +24,14 @@ application model by default. Sine `base64` encoder works with
 `integer` value then PK should be also `integer`, Fortunately
 again `PK` field is `integer` by nature.
 
-When a model get saved, `post_save` signal will be emitted,
-This is where a base64 encoded key will be generated/encoded
-from model's `PK`, Then model will get **updated** not saved again.
-this operation happens just one the first time model get saved.
-In next time model get saved or updated `base64` won't get generated.
+When a model gets saved, ``post_save`` signal will be emitted,
+This is where a ``base64`` encoded key will be generated/encoded
+from model's ``PK``, Then model will gets **updated** not getting save again.
+this operation happens just on the first time model gets saved.
+In next time model gets saved or updated ``base64`` won't be generated.
 
 You wanna know more about how ``django-base64field`` works? Then get da fuck
-out of ``README.rst`` and go look inside ``django_base64field.tests.py``.
+out of ``README.rst`` and look inside the ``django_base64field.tests.py``.
 
 Usage
 -----
@@ -92,5 +92,5 @@ Or I don't know, Install it directly from git.
     pip install git+https://github.com/Alir3z4/django-base64field.git#egg=django-base64field
 
 
-Some pkg have no installation method, This is awefuckingsome that
+Some pkgs have no installation method, This is awefuckingsome that
 ``django-base64field`` gives you many ways for installation.
