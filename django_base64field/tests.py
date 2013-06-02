@@ -1,45 +1,6 @@
-from django.db import models
 from django.test import TestCase
 from django.utils.baseconv import base64
-from django_base64field.fields import Base64Field
-
-
-class Planet(models.Model):
-    ek = Base64Field()
-    name = models.CharField(
-        default='Fucker',
-        max_length=103
-    )
-
-
-class Continent(models.Model):
-    ek = Base64Field()
-    name = models.CharField(
-        default='Suckers!',
-        max_length=13
-    )
-    planet = models.ForeignKey(Planet, to_field='ek')
-
-
-class Helper(models.Model):
-    """
-    base64 encoded value won't be available at first time creation.
-    It can ve accessible by getting the object from database after creation
-    mean when it get saved completely, But what if we don't want to get our base64
-    encoded key from our sweet model by retrieving it again from database?
-
-    It's easy, efficient, holly and molly!
-    """
-    ek = Base64Field()
-
-
-    def _ek(self):
-        if self.ek: return self.ek
-
-        if (not self.ek) and (self.pk):
-            return base64.encode(self.pk)
-
-        return self.ek
+from django_base64field.tests.models import Planet, Continent, Helper
 
 
 class TestBase64Field(TestCase):
@@ -108,7 +69,6 @@ class TestBase64Field(TestCase):
 
         continent_pk = continent.pk
         same_continent_but_fresh = Continent.objects.get(pk=continent_pk)
-
 
         self.assertNotEqual(same_continent_but_fresh.ek, continent.ek)
         self.assertEqual(same_continent_but_fresh.ek, base64.encode(continent_pk))
