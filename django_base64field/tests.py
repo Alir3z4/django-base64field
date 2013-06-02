@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.utils.baseconv import base64
 from django_base64field.fields import Base64Field
 
+
 class Planet(models.Model):
     ek = Base64Field()
     name = models.CharField(
