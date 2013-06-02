@@ -38,7 +38,7 @@ class Base64Field(CharField):
         kwargs['blank'] = kwargs.get('blank', True)
         kwargs['editable'] = kwargs.get('editable', False)
         kwargs['default'] = kwargs.get('default', '')
-        kwargs['unique'] = True
+        kwargs['unique'] = kwargs.get('unique', False)
         self.encode_receiver = encode_receiver
         super(Base64Field, self).__init__(*args, **kwargs)
 
