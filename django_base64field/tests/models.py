@@ -4,7 +4,9 @@ from django_base64field.fields import Base64Field
 
 
 class Planet(models.Model):
-    ek = Base64Field()
+    # Making `ek` unique just because it will be used as `FK`
+    # in other models.
+    ek = Base64Field(unique=True)
     name = models.CharField(
         default='Fucker',
         max_length=103
