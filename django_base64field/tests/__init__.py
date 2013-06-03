@@ -1,0 +1,1 @@
+from django_base64field.tests.test_base64field import TestBase64Field

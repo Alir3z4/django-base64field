@@ -12,6 +12,7 @@ settings.configure(
     },
     INSTALLED_APPS=(
         'django_base64field',
+        'django_base64field.tests'
     )
 )
 

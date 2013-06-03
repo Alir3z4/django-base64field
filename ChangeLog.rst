@@ -4,6 +4,12 @@ ChangeLog
 
 .. contents:: Versions
 
+1.0 - 2013.06.00
+----------------
+* Fixed #10: Add a custom ek generator method.
+* Make `unique` attr on Base64Field optional
+*
+
 0.9 - 2013.03.26
 ----------------
 

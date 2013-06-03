@@ -1,5 +1,7 @@
+import importlib
 from django.db.models import signals
 from django.db.models.fields import CharField
+
 
 class Base64Field(CharField):
     """
@@ -31,18 +33,25 @@ class Base64Field(CharField):
     >>> u'HS7Y_sdg3x'
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, encode_receiver=None, *args, **kwargs):
         kwargs['max_length'] = kwargs.get('max_length', 255)
+        kwargs['null'] = kwargs.get('null', True)
         kwargs['blank'] = kwargs.get('blank', True)
-        kwargs['editable'] = kwargs.get('editable', False)
-        kwargs['default']  = kwargs.get('default', '')
-        kwargs['unique'] = True
+        kwargs['default'] = kwargs.get('default', '')
+        self.encode_receiver = encode_receiver
         super(Base64Field, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
         super(Base64Field, self).contribute_to_class(cls, name)
         cls._base64field_name = name
-        signals.post_save.connect(self.generate_encoded_pk, cls)
+        encode_receiver = self.generate_encoded_pk
+
+        if self.encode_receiver:
+            e_module, e_method = self.encode_receiver.split(':')
+            e_module = importlib.import_module(e_module)
+            encode_receiver = getattr(e_module, e_method)
+
+        signals.post_save.connect(encode_receiver, cls)
 
     def generate_encoded_pk(self, sender, **kwargs):
         instance = kwargs['instance']
@@ -54,11 +63,13 @@ class Base64Field(CharField):
             obj_pk = instance.pk
 
             sender._default_manager.filter(pk=obj_pk).update(
-                **{field_name:base64.encode(obj_pk)}
+                **{field_name: base64.encode(obj_pk)}
             )
+
 
 try:
     from south.modelsinspector import add_introspection_rules
+
     add_introspection_rules([], ["^django_base64field\.fields\.Base64Field"])
 except ImportError:
     # No error should silently get passed my ASS!
