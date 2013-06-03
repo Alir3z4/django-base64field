@@ -109,5 +109,5 @@ class TestBase64Field(TestCase):
         refreshed_obj = CustomReceiver.objects.get(pk=obj.pk)
 
         self.assertIsNotNone(refreshed_obj.youyouid)
-        self.assertIsInstance(refreshed_obj.youyouid, basestring)
+        self.assertIsInstance(str(refreshed_obj.youyouid), str)
         self.assertIsInstance(uuid.UUID(refreshed_obj.youyouid), uuid.UUID)
