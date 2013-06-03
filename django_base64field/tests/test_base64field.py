@@ -1,6 +1,12 @@
+import uuid
 from django.test import TestCase
 from django.utils.baseconv import base64
-from django_base64field.tests.models import Planet, Continent, Helper
+from django_base64field.tests.models import (
+    Planet,
+    Continent,
+    Helper,
+    CustomReceiver
+)
 
 
 class TestBase64Field(TestCase):
@@ -91,4 +97,3 @@ class TestBase64Field(TestCase):
         # from database
         self.assertIsNotNone(hell._ek())
         self.assertNotIn(hell._ek(), ['', None])
-
