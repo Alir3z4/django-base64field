@@ -97,3 +97,17 @@ class TestBase64Field(TestCase):
         # from database
         self.assertIsNotNone(hell._ek())
         self.assertNotIn(hell._ek(), ['', None])
+
+    def test_field_with_custom_receiver_method(self):
+        """
+         Should use a different receiver method for generating a custom
+        base64field. For this test `CustomReceiver` model will be used which
+        it will use `django_baset64field.tests.receivers:custom_receiver` as a
+        custom receiver for `Base64field`.
+        """
+        obj = CustomReceiver.objects.create()
+        refreshed_obj = CustomReceiver.objects.get(pk=obj.pk)
+
+        self.assertIsNotNone(refreshed_obj.youyouid)
+        self.assertIsInstance(refreshed_obj.youyouid, basestring)
+        self.assertIsInstance(uuid.UUID(refreshed_obj.youyouid), uuid.UUID)
