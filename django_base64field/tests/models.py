@@ -38,3 +38,13 @@ class Helper(models.Model):
             return base64.encode(self.pk)
 
         return self.ek
+
+
+class CustomReceiver(models.Model):
+    """
+    Passing custom receiver to generate `youyouid` with a custom receiver.
+    """
+    youyouid = Base64Field(
+        encode_receiver='django_base64field.tests.receivers:custom_receiver'
+    )
+
